@@ -1,0 +1,9 @@
+View farmer profile and update the profile visit count for the farmer
+Get dashboard overview at a certain date
+implement notification system using socket io
+setup cache using redis
+Identify memory leaks in the system
+
+referral system
+Build all the mails - forgot password, etc
+Addded filessd

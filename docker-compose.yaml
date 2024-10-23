@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+    app:
+        build: ./
+        restart: unless-stopped
+        env_file: ./.env
+        ports:
+            - $PORT:$PORT
+        stdin_open: true
+        tty: true
+        volumes:
+            - .:/app
+            - /app/node_modules
+        depends_on:
+            - nithub_db
+        links:
+            - nithub_cache:nithub_cache
+
+    nithub_db:
+        image: postgres
+        restart: always
+        container_name: nithub_db
+        ports:
+            - '5431:5432'
+        environment:
+            PGDATA: /var/lib/postgresql/data/pgdata
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: adminpassword
+            POSTGRES_DB: nithub_db
+
+    adminer:
+        image: adminer
+        container_name: adminer
+        restart: always
+        ports:
+            - "8080:8080"  # Port changed to avoid conflict
+
+    nithub_cache:
+        image: 'redis:alpine'
+        container_name: nithub_cache
+        ports:
+            - '6379:6379'
+
+networks:
+    default:
+        name: nithub
+        external: false

@@ -1,0 +1,3 @@
+Create the Postman Collection for the Auth Service
+
+Write all the emails

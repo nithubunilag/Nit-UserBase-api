@@ -1,0 +1,120 @@
+Table users {
+  id                     int       [pk, increment]
+  full_name              varchar   [not null]
+  date_of_birth          date      
+  gender                 varchar   
+  phone_number           varchar   [not null]
+  email_address          varchar   [not null, unique]
+  emergency_contact      varchar   
+  address                varchar   [not null]
+  permanent_address      varchar   
+  linkedin_profile       varchar   
+  education_level        varchar   
+  performance_history    varchar
+  current_address        varchar   
+  start_date             date      [not null]
+  role_id                int       [ref: > role.id]
+  department_id          int       [ref: > department.id]
+  supervisor_name        varchar   
+  created_at             timestamp [default: `now()`]
+  updated_at             timestamp [default: `now()`]
+
+  indexes {
+    (email_address) [unique]
+  }
+}
+
+Table role {
+  id                     int       [pk, increment]
+  role_name              varchar   [not null]  
+}
+
+Table department {
+  id                     int       [pk, increment]
+  department_name        varchar   [not null]  
+}
+
+
+// STUDENTS
+Table programs {
+  id                     int       [pk, increment]
+  user_id                int       [ref: > users.id]
+  program_name           varchar   [not null]
+  program_supervisor     varchar   [not null]
+  program_tenure         varchar     
+}
+
+Table user_programs {
+  id                     int       [pk, increment]
+  user_id                int       [ref: > users.id]
+  program_id             int       [ref: > programs.id]   
+}
+
+// INTERNS
+
+Table interns {
+  id                     int       [pk, increment]
+  user_id                int       [ref: > users.id]
+  assigned_to            int [ref: > users.id]
+  internship_type        varchar   [not null]
+  duration               varchar   
+  school_affiliation     varchar    
+}
+
+Table employees {
+  id                     int       [pk, increment]
+  user_id                int       [ref: > users.id]
+  position_title         varchar   [not null]  
+}
+
+Table volunteers {
+  id                     int       [pk, increment]
+  user_id                int       [ref: > users.id]
+  assigned_to            int       [ref: > users.id]
+
+  volunteer_role         varchar   [not null]
+  volunteer_organization varchar   [not null]
+  duration               varchar   
+  availability           varchar   
+}
+
+Table projects {
+  id          int [pk, increment]
+  name        varchar
+  description text
+  status      enum('ongoing', 'completed')
+  start_date  date
+  end_date    date
+  created_at  timestamp
+}
+
+Table user_projects {
+  id          int [pk, increment]
+  user_id     int [ref: > users.id]
+  project_id  int [ref: > projects.id]
+  role_in_project varchar
+  created_at  timestamp
+}
+
+
+Table attendance {
+  id          int [pk, increment]
+  user_id     int [ref: > users.id]
+  date        date
+  status      enum('present', 'absent', 'late')
+  scan_in timestamp            
+  scan_out timestamp            
+  created_at  timestamp
+}
+
+
+Table employment_timeline {
+  id          int [pk, increment]
+  user_id     int [ref: > users.id]
+  old_role    enum('student', 'intern', 'employee')
+  new_role    enum('intern', 'employee')
+  promoted_at timestamp
+}
+
+
+

@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: nithub_api
+    runtime: docker
+    repo: https://github.com/nithub/nithub-Api---Monolithic.git
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: .
+    numInstances: 1
+    envVars:
+      - key: DATABASE_USER
+        fromDatabase:
+          name: nithub
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: nithub
+          property: password
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: nithub
+          property: database
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: nithub
+          property: connectionString
+      - fromGroup: nithub-env
+
+databases:
+  - name: nithub
+    databaseName: nithub_02kb
+    user: root
+    plan: free
+    region: oregon
+    ipAllowList: []

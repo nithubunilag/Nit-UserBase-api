@@ -1,4 +1,5 @@
-import { UnProcessableError, joiValidate } from '@/core';
+import { authUtil } from '@/api/auth/utils';
+import { UnAuthorizedError, UnProcessableError, config, joiValidate, logger } from '@/core';
 import type { FileObject, FileObjects } from '@/core/types';
 import type { Request } from 'express';
 import type { FileArray } from 'express-fileupload';
@@ -47,5 +48,29 @@ export const validateIncomingRequest = (schema: ValidationSchema, controllerArgs
         if (paramsSchema) joiValidate(paramsSchema, params);
     } catch (error: any) {
         throw new UnProcessableError(error.message.replaceAll('"', ''));
+    }
+};
+
+export const authenticateRequest = async (req: Request): Promise<void> => {
+    if (req.user?.id) return;
+
+    try {
+        const accessToken = req.cookies?.accessToken;
+
+        if (!accessToken) {
+            throw new UnAuthorizedError('Unauthorized: No access token provided');
+        }
+
+        const data = await authUtil.extractTokenDetails(accessToken, config.auth.accessTokenSecret);
+
+        if (!data) {
+            throw new UnAuthorizedError('Unauthorized: Invalid token data');
+        }
+
+        req.user = data;
+    } catch (error: any) {
+        logger.error(`Authentication Error: ${error.message}`);
+
+        throw new UnAuthorizedError('Unauthorized: Authentication failed');
     }
 };

@@ -8,25 +8,27 @@ export const idParamsSchema: ValidationSchema = {
     }),
 };
 
+export const userValidationSchema = Joi.object({
+    fullName: Joi.string().required(),
+    emailAddress: Joi.string().email().required(),
+    roleId: Joi.string().uuid().required(),
+    gender: Joi.string()
+        .valid(...Object.values(UserGender))
+        .required(),
+    departmentId: Joi.string().uuid().optional(),
+    dateOfBirth: Joi.date().optional(),
+    phoneNumber: Joi.string().optional(),
+    emergencyContact: Joi.string().optional(),
+    currentAddress: Joi.string().optional(),
+    permanentAddress: Joi.string().optional(),
+    linkedinProfile: Joi.string().optional().uri(),
+    educationLevel: Joi.string()
+        .valid(...Object.values(EducationalLevel))
+        .optional(),
+});
+
 export const createUserSchema: ValidationSchema = {
-    inputSchema: Joi.object().keys({
-        fullName: Joi.string().required(),
-        emailAddress: Joi.string().email().required(),
-        roleId: Joi.string().uuid().required(),
-        gender: Joi.string()
-            .valid(...Object.values(UserGender))
-            .required(),
-        departmentId: Joi.string().uuid().optional(),
-        dateOfBirth: Joi.date().optional(),
-        phoneNumber: Joi.string().optional(),
-        emergencyContact: Joi.string().optional(),
-        currentAddress: Joi.string().optional(),
-        permanentAddress: Joi.string().optional(),
-        linkedinProfile: Joi.string().optional().uri(),
-        educationLevel: Joi.string()
-            .valid(...Object.values(EducationalLevel))
-            .optional(),
-    }),
+    inputSchema: Joi.alternatives().try(userValidationSchema, Joi.array().items(userValidationSchema)),
 };
 
 export const getUserSchema: ValidationSchema = {
@@ -101,7 +103,6 @@ export const updateRoleSchema: ValidationSchema = {
         id: Joi.string().uuid().required(),
     }).required(),
 };
-
 
 export const createDepartmentSchema: ValidationSchema = {
     inputSchema: Joi.object({

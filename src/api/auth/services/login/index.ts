@@ -1,6 +1,6 @@
 import { LoginPayload } from '@/api/auth/interfaces';
 import { Auth } from '@/api/auth/models';
-import { authUtil, OTPService } from '@/api/auth/utils';
+import { authUtil } from '@/api/auth/utils';
 import { BadRequestError, compareHashedData, config, ControllerArgs, HttpStatus, logger } from '@/core';
 import { Op } from 'sequelize';
 
@@ -15,7 +15,7 @@ export class Login {
      * @throws {BadRequestError} Thrown if login credentials are invalid or user email is not verified.
      */
 
-    login = async ({ input, request }: ControllerArgs<LoginPayload>) => {
+    login = async ({ input }: ControllerArgs<LoginPayload>) => {
         if (!input) throw new BadRequestError(`Invalid login credentials`);
 
         const { emailAddress, password } = input;

@@ -1,4 +1,4 @@
-import type { ControllerArgsTypes } from '@/core';
+import type { ControllerArgsTypes, RequestFileContents } from '@/core';
 import { EducationalLevel, UserGender, UserPayload } from './module.types';
 
 export interface IdParamPayload extends ControllerArgsTypes {
@@ -57,7 +57,16 @@ export interface RetrieveUserPayload extends ControllerArgsTypes {
 }
 
 export interface CreateUserPayload extends ControllerArgsTypes {
-    input: UserPayload;
+    input: UserPayload | UserPayload[];
+}
+
+export interface CreateUsersFromCSVPayload extends ControllerArgsTypes {
+    query: {
+        roleId: string;
+    };
+    files: {
+        csv: RequestFileContents;
+    };
 }
 
 export interface UpdateUserPayload extends ControllerArgsTypes {

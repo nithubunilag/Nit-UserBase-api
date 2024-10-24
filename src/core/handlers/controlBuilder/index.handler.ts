@@ -2,7 +2,7 @@ import { HttpStatus, logger } from '@/core';
 import type { AnyFunction, ExpressCallbackFunction } from '@/core/types';
 import type { NextFunction, Request, Response } from 'express';
 import { ControllerHandlerOptions, ValidationSchema } from './index.interface';
-import { parseIncomingRequest, validateIncomingRequest } from './index.utils';
+import { authenticateRequest, parseIncomingRequest, validateIncomingRequest } from './index.utils';
 
 /**
  * Handles HTTP requests by providing methods for authentication, authorization, validation, and controller execution.
@@ -23,7 +23,8 @@ export class ControllerHandler {
     handle = (controllerFn: AnyFunction, schema: ValidationSchema | undefined = {}, options: ControllerHandlerOptions): ExpressCallbackFunction => {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
-                console.log(options);
+                if (options?.isPrivate) await authenticateRequest(req);
+
                 const controllerArgs = parseIncomingRequest(req);
 
                 if (schema) validateIncomingRequest(schema, controllerArgs);

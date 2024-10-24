@@ -6,7 +6,7 @@ import { forgotPasswordSchema, loginSchema, resetPasswordSchema } from './schema
 export const authRouter = Router();
 
 authRouter
-    .post('/logout', logoutHandler.handle)
+    .get('/logout', logoutHandler.handle)
 
     .post(
         '/login',

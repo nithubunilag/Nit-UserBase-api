@@ -1,11 +1,11 @@
 import { HttpStatus } from '@/core';
 import { AppMessages } from '@/core/common';
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 export class Logout {
     constructor() {}
 
-    handle = (req: Request, res: Response, next: NextFunction) => {
+    handle = (req: Request, res: Response) => {
         req.user = undefined;
 
         res.clearCookie('accessToken');

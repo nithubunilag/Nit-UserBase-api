@@ -5,6 +5,7 @@ import {
     createDepartmentSchema,
     createRoleSchema,
     createUserSchema,
+    createUsersFromCSVSchema,
     getUserSchema, idParamsSchema, promoteUserSchema, updateDepartmentSchema, updateRoleSchema, updateUserSchema
 } from './schema';
 
@@ -27,6 +28,16 @@ userRouter
             .isPrivate()
             .handle(),
     )
+
+userRouter.post(
+    '/csv',
+    ControlBuilder.builder()
+        .setHandler(createUserHandler.handleCSV)
+        .setValidator(createUsersFromCSVSchema)
+        .isPrivate()
+        .handle(),
+);
+
 
 userRouter
     .route('/:id')
@@ -53,7 +64,7 @@ userRouter
     );
 
 userRouter.patch(
-    '/users/:id/promote',
+    '/:id/promote',
     ControlBuilder.builder()
         .setHandler(promoteUserHandler.handle)
         .setValidator(promoteUserSchema)

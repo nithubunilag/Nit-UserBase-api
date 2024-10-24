@@ -52,6 +52,20 @@ export const getUserSchema: ValidationSchema = {
     }),
 };
 
+export const createUsersFromCSVSchema: ValidationSchema = {
+    querySchema: Joi.object({
+        roleId: Joi.string().uuid().required(),
+    }).required(),
+
+    fileSchema: Joi.object({
+        csv: Joi.object({
+            buffer: Joi.binary().required(),
+            originalname: Joi.string().required(),
+            mimetype: Joi.string().valid('text/csv').required(),
+        }).required(),
+    }).required(),
+};
+
 export const updateUserSchema: ValidationSchema = {
     inputSchema: Joi.object({
         fullName: Joi.string().optional(),

@@ -4,7 +4,7 @@ export const initializeDbConnection = async () => {
     try {
           await sequelize.authenticate();
 
-          await sequelize.sync();
+        //   await sequelize.sync();
 
           logger.info('Connection has been established successfully.');
     } catch (error) {

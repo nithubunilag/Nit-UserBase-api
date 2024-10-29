@@ -11,6 +11,56 @@ import {
 
 export const userRouter = Router();
 
+
+/***********  ROLES  ***********/
+userRouter
+    .route('/roles')
+    .post(
+        ControlBuilder.builder()
+            .setValidator(createRoleSchema)
+            .setHandler(roleServiceHandler.create)
+            .isPrivate()
+            .handle(),
+    )
+    .get(
+        ControlBuilder.builder()
+            .setHandler(roleServiceHandler.findAll)
+            .isPrivate()
+            .handle(),
+    )
+    .put(
+        ControlBuilder.builder()
+            .setValidator(updateRoleSchema)
+            .setHandler(roleServiceHandler.update)
+            .isPrivate()
+            .handle(),
+    )
+
+/***********  DEPARTMENT  ***********/
+userRouter
+    .route('/departments')
+    .post(
+        ControlBuilder.builder()
+            .setValidator(createDepartmentSchema)
+            .setHandler(departmentService.create)
+            .isPrivate()
+            .handle(),
+    )
+    .get(
+        ControlBuilder.builder()
+            .setHandler(departmentService.findAll)
+            .isPrivate()
+            .handle(),
+    )
+    .put(
+        ControlBuilder.builder()
+            .setValidator(updateDepartmentSchema)
+            .setHandler(departmentService.update)
+            .isPrivate()
+            .handle(),
+    )
+
+
 /***********  USER  ***********/
 userRouter
     .route('/')
@@ -72,51 +122,3 @@ userRouter.patch(
         .handle(),
 );
 
-
-/***********  ROLES  ***********/
-userRouter
-    .route('/roles')
-    .post(
-        ControlBuilder.builder()
-            .setValidator(createRoleSchema)
-            .setHandler(roleServiceHandler.create)
-            .isPrivate()
-            .handle(),
-    )
-    .get(
-        ControlBuilder.builder()
-            .setHandler(roleServiceHandler.findAll)
-            .isPrivate()
-            .handle(),
-    )
-    .put(
-        ControlBuilder.builder()
-            .setValidator(updateRoleSchema)
-            .setHandler(roleServiceHandler.update)
-            .isPrivate()
-            .handle(),
-    )
-
-/***********  DEPARTMENT  ***********/
-userRouter
-    .route('/departments')
-    .post(
-        ControlBuilder.builder()
-            .setValidator(createDepartmentSchema)
-            .setHandler(departmentService.create)
-            .isPrivate()
-            .handle(),
-    )
-    .get(
-        ControlBuilder.builder()
-            .setHandler(departmentService.findAll)
-            .isPrivate()
-            .handle(),
-    )
-    .put(
-        ControlBuilder.builder()
-            .setValidator(updateDepartmentSchema)
-            .setHandler(departmentService.update)
-            .isPrivate()
-            .handle(),
-    )

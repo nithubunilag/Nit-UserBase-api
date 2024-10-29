@@ -96,7 +96,7 @@ module.exports = {
             },
         });
 
-        await queryInterface.addIndex('users', ['emailAddress'], {
+        await queryInterface.addIndex('user', ['emailAddress'], {
             unique: true,
             name: 'users_email_unique',
         });
@@ -110,7 +110,7 @@ module.exports = {
          * await queryInterface.dropTable('users');
          */
 
-        await queryInterface.removeIndex('users', 'users_email_unique');
+        await queryInterface.removeIndex('user', 'users_email_unique');
 
         await queryInterface.dropTable('user', {
             cascade: true,

@@ -1,5 +1,5 @@
 import { IdParamPayload, RetrieveUserPayload } from '@/api/user/core/interfaces';
-import { User } from '@/api/user/core/models';
+import { Department, Role, User } from '@/api/user/core/models';
 import { BadRequestError, ControllerArgs, HttpStatus, logger } from '@/core';
 import { InferAttributes, WhereOptions } from 'sequelize';
 
@@ -42,6 +42,10 @@ export class RetrieveUser {
                 order: [[sortBy, sortOrder]],
                 offset,
                 limit,
+                include: [
+                    { model: Department, as: 'department' },
+                    { model: Role, as: 'role' },
+                ],
             });
 
             return {

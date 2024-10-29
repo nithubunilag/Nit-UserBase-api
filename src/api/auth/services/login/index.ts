@@ -54,7 +54,7 @@ export class Login {
             code: HttpStatus.OK,
             message: 'Logged in Successfully',
             headers: {
-                'Set-Cookie': [`accessToken=${accessToken}; Path=/; HttpOnly`],
+                'Set-Cookie': [`accessToken=${accessToken}; Path=/; HttpOnly; SameSite=None`],
             },
         };
     };

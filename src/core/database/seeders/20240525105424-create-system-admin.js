@@ -13,20 +13,20 @@ module.exports = {
         }
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        // await queryInterface.bulkInsert(
-        //     'auth',
-        //     [
-        //         {
-        //             id: uuidv4(),
-        //             emailAddress: 'davidokunoye003@gmail.com',
-        //             password: hashedPassword,
-        //             provider: "local",
-        //             createdAt: new Date(),
-        //             updatedAt: new Date(),
-        //         },
-        //     ],
-        //     {},
-        // );
+        await queryInterface.bulkInsert(
+            'auth',
+            [
+                {
+                    id: uuidv4(),
+                    emailAddress: 'davidokunoye003@gmail.com',
+                    password: hashedPassword,
+                    provider: "local",
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+            ],
+            {},
+        );
     },
 
     async down(queryInterface) {

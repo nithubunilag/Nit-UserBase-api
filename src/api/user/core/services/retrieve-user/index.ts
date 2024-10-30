@@ -1,10 +1,10 @@
 import { IdParamPayload, RetrieveUserPayload } from '@/api/user/core/interfaces';
-import { Department, Role, User } from '@/api/user/core/models';
+import { Department, EmploymentTimeline, Role, User } from '@/api/user/core/models';
 import { BadRequestError, ControllerArgs, HttpStatus, logger } from '@/core';
 import { InferAttributes, WhereOptions } from 'sequelize';
 
 export class RetrieveUser {
-    constructor(private readonly dbUser: typeof User) {}
+    constructor(private readonly dbUser: typeof User, private readonly dbEmployentTimeline: typeof EmploymentTimeline) {}
 
     handleSingle = async ({ params }: ControllerArgs<IdParamPayload>) => {
         const { id } = params;
@@ -13,6 +13,21 @@ export class RetrieveUser {
             where: {
                 id,
             },
+
+            include: [
+                { model: Department, as: 'department' },
+                { model: Role, as: 'role' },
+            ],
+        });
+
+        const employmentTimeline = await this.dbEmployentTimeline.findAll({
+            attributes: ['id', 'userId', 'action', 'oldValue', 'newValue'],
+
+            where: {
+                userId: id,
+            },
+
+            include: [{ model: User, as: 'user' }],
         });
 
         if (!user) throw new BadRequestError('Invalid User!');
@@ -20,7 +35,10 @@ export class RetrieveUser {
         return {
             code: HttpStatus.OK,
             message: 'User retrieved successfully',
-            data: user,
+            data: {
+                user: user.dataValues,
+                employmentTimeline,
+            },
         };
     };
 

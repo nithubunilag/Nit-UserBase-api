@@ -9,6 +9,8 @@ export class EmploymentTimeline extends Model<InferAttributes<EmploymentTimeline
     declare action: ActivityTimelineType;
     declare oldValue: string;
     declare newValue: string;
+
+    public user?: User;
 }
 
 EmploymentTimeline.init(
@@ -49,7 +51,10 @@ EmploymentTimeline.init(
         sequelize,
         modelName: 'employmentTimeline',
         tableName: 'employmentTimeline',
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
     },
 );
+
+
+EmploymentTimeline.belongsTo(User, { foreignKey: 'userId', as: 'user' });

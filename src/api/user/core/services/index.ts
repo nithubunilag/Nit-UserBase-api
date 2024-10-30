@@ -9,7 +9,7 @@ import { UpdateUser } from './update-user';
 
 export const deleteUserHandler = new DeleteUser(User);
 export const roleServiceHandler = new RoleService(Role);
-export const retrieveUserHandler = new RetrieveUser(User);
+export const retrieveUserHandler = new RetrieveUser(User, EmploymentTimeline);
 export const createUserHandler = new CreateUser(User, Role);
 export const updateUserHandler = new UpdateUser(User, Role);
 export const departmentService = new DepartmentService(Department);

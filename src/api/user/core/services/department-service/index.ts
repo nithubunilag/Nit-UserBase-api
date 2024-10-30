@@ -28,7 +28,10 @@ export class DepartmentService {
     };
 
     findAll = async () => {
-        const departments = await this.dbDepartment.findAll();
+        const departments = await this.dbDepartment.findAll({
+            attributes: ['id', 'name', 'createdAt', 'updatedAt'],
+            order: [['createdAt', 'DESC']],
+        });
 
         return {
             code: HttpStatus.OK,

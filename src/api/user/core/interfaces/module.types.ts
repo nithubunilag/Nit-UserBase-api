@@ -17,8 +17,8 @@ export enum UserRole {
 }
 
 export enum ActivityTimelineType {
-    ROLE_CHANGE = 'Role Change',
-    DEPARTMENT_CHANGE = 'Department Change',
+    ROLE_CHANGE = 'role_change',
+    DEPARTMENT_CHANGE = 'department_change',
 }
 
 export enum EducationalLevel {

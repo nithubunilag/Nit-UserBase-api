@@ -1,6 +1,5 @@
 import { sequelize } from '@/core';
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, UUIDV4 } from 'sequelize';
-import { User } from './user.model';
 
 export class Department extends Model<InferAttributes<Department>, InferCreationAttributes<Department>> {
     declare id: CreationOptional<string>;
@@ -26,7 +25,7 @@ Department.init(
         sequelize,
         modelName: 'department',
         tableName: 'department',
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
     },
 );

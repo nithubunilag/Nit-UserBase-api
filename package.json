@@ -13,7 +13,7 @@
         "db:migrate": "npx sequelize-cli db:migrate",
         "undo:db:migrate": "npx sequelize-cli db:migrate:undo --name",
         "undo:db:migrate:all": "npx sequelize-cli db:migrate:undo:all",
-        "db:seed": "npx sequelize-cli db:seed:all",
+    "db:seed": "npx sequelize-cli db:seed:all",
         "lint:check": "eslint --ignore-path .eslintignore \"src/**/*.+(js|ts|json)\"",
         "lint:fix": "eslint \"src/**/*.+(js|ts|json)\" --fix",
         "lint:staged": "eslint --ignore-path .eslintignore",

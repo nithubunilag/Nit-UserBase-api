@@ -45,17 +45,23 @@ export class Login {
             secret: config.auth.accessTokenSecret,
         });
 
+
         if (!accessToken) throw new BadRequestError('Authentication failed');
 
         logger.info('Logged In Successfully');
+        // Access to XMLHttpRequest at 'https://5487-105-112-204-181.ngrok-free.app/api/v1/auth/login' from origin 'http://localhost:3000' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
         return {
-            data: authUser,
+            data: {
+                user: authUser,
+                accessToken,
+            },
             code: HttpStatus.OK,
             message: 'Logged in Successfully',
-            headers: {
-                'Set-Cookie': [`accessToken=${accessToken}; Path=/; HttpOnly; SameSite=Strict`],
-            },
+            // headers: {
+            //     'Set-Cookie': [`accessToken=${accessToken}; Path=/; HttpOnly; Secure; Max-Age=${15 * 60}; SameSite=Lax `],
+            //     'Access-Control-Allow-Origin': 'http://localhost:3000'
+            // },
         };
     };
 }

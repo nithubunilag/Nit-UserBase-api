@@ -10,7 +10,7 @@ const allowedHeaders: string[] = ['Content-Type', 'Authorization'];
 export const corsOptions: CorsOptions = {
     methods: allowedMethods,
     allowedHeaders,
-    origin: ['http://localhost:3000', 'https://nit-identity.vercel.app'],
+    origin: ['http://localhost:3000', 'https://nit-identity.vercel.app', 'https://nit-identity-git-main-drex72s-projects.vercel.app'],
     credentials: true,
     preflightContinue: true,
 };

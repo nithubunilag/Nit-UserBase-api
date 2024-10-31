@@ -1,19 +1,19 @@
-import { User } from '@/api/user/core';
 import { sequelize } from '@/core';
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, UUIDV4 } from 'sequelize';
+import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, UUIDV4 } from 'sequelize';
+
 import { Project } from './project.model';
+import { User } from './user.model';
 
 export class UserProject extends Model<InferAttributes<UserProject>, InferCreationAttributes<UserProject>> {
-    declare userProjectId: CreationOptional<string>;
-    declare userId: string;
-    declare projectId: string;
+    declare id: CreationOptional<string>;
+    declare userId: ForeignKey<User['id']>;
+    declare projectId: ForeignKey<Project['id']>;
     declare roleInProject: CreationOptional<string>;
-    declare assignedAt: CreationOptional<Date>;
 }
 
 UserProject.init(
     {
-        userProjectId: {
+        id: {
             type: DataTypes.UUID,
             allowNull: false,
             primaryKey: true,
@@ -42,24 +42,12 @@ UserProject.init(
             allowNull: true,
             defaultValue: 'Contributor',
         },
-
-        assignedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         modelName: 'userProject',
         tableName: 'userProject',
         sequelize,
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
-        indexes: [
-            {
-                unique: true,
-                fields: ['userId', 'projectId'],
-            },
-        ],
     },
 );

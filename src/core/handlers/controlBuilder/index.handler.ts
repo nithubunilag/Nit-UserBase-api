@@ -39,11 +39,7 @@ export class ControllerHandler {
 
                 const { code, headers, ...data } = controllerResult;
 
-                const newHeaders = { ...headers, 'Access-Control-Allow-Origin': 'http://localhost:3000', 'Access-Control-Allow-Credentials': 'true' };
-
-                console.log(newHeaders);
-
-                res.set(newHeaders)
+                res.set({ ...headers })
                     .status(code ?? HttpStatus.OK)
                     .send(data);
             } catch (error) {

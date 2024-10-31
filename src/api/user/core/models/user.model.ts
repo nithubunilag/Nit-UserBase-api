@@ -2,6 +2,7 @@ import { sequelize } from '@/core';
 import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, UUIDV4 } from 'sequelize';
 import { EducationalLevel, UserGender } from '../interfaces';
 import { Department } from './department.model';
+import { Project } from './project.model';
 import { Role } from './role.model';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -21,6 +22,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
     public role?: Role;
     public department?: Department;
+    public projects?: Project[];
 }
 
 User.init(
@@ -111,6 +113,3 @@ User.init(
         ],
     },
 );
-
-User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-User.belongsTo(Department, { foreignKey: 'departmentId', as: 'department' });

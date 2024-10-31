@@ -1,11 +1,14 @@
 import { ControlBuilder } from '@/core';
 import { Router } from 'express';
-import { createUserHandler, deleteUserHandler, departmentService, promoteUserHandler, retrieveUserHandler, roleServiceHandler, updateUserHandler } from '../services/';
+import { createUserHandler, deleteUserHandler,projectService, departmentService, promoteUserHandler, retrieveUserHandler, roleServiceHandler, updateUserHandler } from '../services/';
 import {
+    assignProjectsToUserSchema,
     createDepartmentSchema,
+    createProjectSchema,
     createRoleSchema,
     createUserSchema,
     createUsersFromCSVSchema,
+    getProjectSchema,
     getUserSchema, idParamsSchema, promoteUserSchema, updateDepartmentSchema, updateRoleSchema, updateUserSchema
 } from './schema';
 
@@ -56,6 +59,33 @@ userRouter
         ControlBuilder.builder()
             .setValidator(updateDepartmentSchema)
             .setHandler(departmentService.update)
+            .isPrivate()
+            .handle(),
+    )
+/***********  PROJECT  ***********/
+userRouter
+    .route('/projects')
+    .post(
+        ControlBuilder.builder()
+            .setValidator(createProjectSchema)
+            .setHandler(projectService.create)
+            .isPrivate()
+            .handle(),
+    )
+    .get(
+        ControlBuilder.builder()
+            .setValidator(getProjectSchema)
+            .setHandler(projectService.findAll)
+            .isPrivate()
+            .handle(),
+    )
+
+userRouter
+    .route('/projects/:id')
+    .get(
+        ControlBuilder.builder()
+            .setValidator(idParamsSchema)
+            .setHandler(projectService.findOne)
             .isPrivate()
             .handle(),
     )
@@ -121,4 +151,15 @@ userRouter.patch(
         .isPrivate()
         .handle(),
 );
+
+userRouter.post(
+    '/:id/assign-projects',
+    ControlBuilder.builder()
+        .setHandler(projectService.assignProjectsToUser)
+        .setValidator(assignProjectsToUserSchema)
+        .isPrivate()
+        .handle(),
+);
+
+
 

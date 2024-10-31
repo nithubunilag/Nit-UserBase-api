@@ -55,7 +55,9 @@ export const authenticateRequest = async (req: Request): Promise<void> => {
     if (req.user?.id) return;
 
     try {
-        const accessToken = req.cookies?.accessToken;
+        // const accessToken = req.cookies?.accessToken;
+
+        const accessToken = req.headers.authorization?.split(' ')[1];
 
         if (!accessToken) {
             throw new UnAuthorizedError('Unauthorized: No access token provided');

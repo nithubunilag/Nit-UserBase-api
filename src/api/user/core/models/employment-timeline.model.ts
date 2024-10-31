@@ -55,6 +55,3 @@ EmploymentTimeline.init(
         freezeTableName: true,
     },
 );
-
-
-EmploymentTimeline.belongsTo(User, { foreignKey: 'userId', as: 'user' });

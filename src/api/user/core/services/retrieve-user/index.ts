@@ -1,5 +1,5 @@
 import { IdParamPayload, RetrieveUserPayload } from '@/api/user/core/interfaces';
-import { Department, EmploymentTimeline, Role, User } from '@/api/user/core/models';
+import { Department, EmploymentTimeline, Project, Role, User } from '@/api/user/core/models';
 import { BadRequestError, ControllerArgs, HttpStatus, logger } from '@/core';
 import { InferAttributes, WhereOptions } from 'sequelize';
 
@@ -17,11 +17,12 @@ export class RetrieveUser {
             include: [
                 { model: Department, as: 'department' },
                 { model: Role, as: 'role' },
+                { model: Project, as: 'projects' },
             ],
         });
 
         const employmentTimeline = await this.dbEmployentTimeline.findAll({
-            attributes: ['id', 'userId', 'action', 'oldValue', 'newValue'],
+            attributes: ['id', 'userId', 'action', 'oldValue', 'newValue', 'createdAt'],
 
             where: {
                 userId: id,
@@ -63,6 +64,7 @@ export class RetrieveUser {
                 include: [
                     { model: Department, as: 'department' },
                     { model: Role, as: 'role' },
+                    { model: Project, as: 'projects' },
                 ],
             });
 

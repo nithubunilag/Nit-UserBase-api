@@ -133,3 +133,31 @@ export const updateDepartmentSchema: ValidationSchema = {
         id: Joi.string().uuid().required(),
     }).required(),
 };
+
+export const createProjectSchema: ValidationSchema = {
+    inputSchema: Joi.object({
+        name: Joi.string().required(),
+        description: Joi.string().optional(),
+    }).required(),
+};
+
+export const getProjectSchema: ValidationSchema = {
+    querySchema: Joi.object().keys({
+        sortBy: Joi.string().valid('name', 'createdAt').optional(),
+        sortOrder: Joi.string().valid('asc', 'desc').optional(),
+
+        // Pagination
+        page: Joi.number().integer().min(1).optional(),
+        limit: Joi.number().integer().min(1).optional(),
+    }),
+};
+
+export const assignProjectsToUserSchema: ValidationSchema = {
+    inputSchema: Joi.object({
+        projectIds: Joi.array().items(Joi.string().uuid().optional()).required(),
+    }).required(),
+
+    paramsSchema: Joi.object({
+        id: Joi.string().uuid().required(),
+    }).required(),
+};

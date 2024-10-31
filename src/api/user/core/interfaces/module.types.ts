@@ -9,6 +9,12 @@ export enum UserGender {
     female = 'female',
 }
 
+export enum ProjectStatus {
+    ACTIVE = 'active',
+    COMPLETED = 'completed',
+    PENDING = 'pending',
+}
+
 export enum UserRole {
     STUDENT = 'STUDENT',
     INTERN = 'INTERN',
@@ -19,6 +25,8 @@ export enum UserRole {
 export enum ActivityTimelineType {
     ROLE_CHANGE = 'role_change',
     DEPARTMENT_CHANGE = 'department_change',
+    PROJECT_ASSIGNMENT = 'project_assignment',
+    PROJECT_DEASSIGNMENT = 'project_deassignment',
 }
 
 export enum EducationalLevel {

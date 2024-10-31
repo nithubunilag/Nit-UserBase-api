@@ -10,7 +10,7 @@ module.exports = {
          * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
          */
 
-        await queryInterface.createTable('employmentTimeline', {
+        await queryInterface.createTable('userProject', {
             id: {
                 type: Sequelize.UUID,
                 allowNull: false,
@@ -28,20 +28,22 @@ module.exports = {
                 },
             },
 
-            oldValue: {
-                type: Sequelize.STRING,
+            projectId: {
+                type: Sequelize.UUID,
                 allowNull: false,
+
+                references: {
+                    model: 'project',
+                    key: 'id',
+                },
             },
 
-            action: {
+            roleInProject: {
                 type: Sequelize.STRING,
                 allowNull: false,
+                defaultValue: 'Contributor',
             },
 
-            newValue: {
-                type: Sequelize.STRING,
-                allowNull: false,
-            },
             createdAt: {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.NOW,
@@ -63,7 +65,7 @@ module.exports = {
          * await queryInterface.dropTable('users');
          */
 
-        await queryInterface.dropTable('employmentTimeline', {
+        await queryInterface.dropTable('userProject', {
             cascade: true,
         });
     },

@@ -87,3 +87,34 @@ export interface PromoteUserPayload extends ControllerArgsTypes {
         id: string;
     };
 }
+
+// PROJECTS
+
+export interface CreateProjectPayload extends ControllerArgsTypes {
+    input: {
+        name: string;
+        description: string;
+    };
+}
+
+export interface RetrieveProjectPayload extends ControllerArgsTypes {
+    query: {
+        // sorting parameters
+        sortBy: 'name' | 'createdAt' | undefined;
+        sortOrder: 'asc' | 'desc' | undefined;
+
+        // pagination parameters
+        page: number | undefined;
+        limit: number | undefined;
+    };
+}
+
+export interface AssignProjectsToUserPayload extends ControllerArgsTypes {
+    input: {
+        projectIds: string[];
+    }
+
+    params: {
+        id: string;
+    };
+}

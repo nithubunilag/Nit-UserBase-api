@@ -1,5 +1,5 @@
 import type { ControllerArgsTypes, RequestFileContents } from '@/core';
-import { EducationalLevel, UserGender, UserPayload } from './module.types';
+import { EducationalLevel, ProjectStatus, UserGender, UserPayload } from './module.types';
 
 export interface IdParamPayload extends ControllerArgsTypes {
     params: {
@@ -99,6 +99,8 @@ export interface CreateProjectPayload extends ControllerArgsTypes {
 
 export interface RetrieveProjectPayload extends ControllerArgsTypes {
     query: {
+        status: ProjectStatus | undefined;
+
         // sorting parameters
         sortBy: 'name' | 'createdAt' | undefined;
         sortOrder: 'asc' | 'desc' | undefined;
@@ -112,7 +114,7 @@ export interface RetrieveProjectPayload extends ControllerArgsTypes {
 export interface AssignProjectsToUserPayload extends ControllerArgsTypes {
     input: {
         projectIds: string[];
-    }
+    };
 
     params: {
         id: string;

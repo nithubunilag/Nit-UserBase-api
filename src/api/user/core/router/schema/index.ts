@@ -1,6 +1,6 @@
 import { ValidationSchema } from '@/core';
 import Joi from 'joi';
-import { EducationalLevel, UserGender } from '../../interfaces';
+import { EducationalLevel, ProjectStatus, UserGender } from '../../interfaces';
 
 export const idParamsSchema: ValidationSchema = {
     paramsSchema: Joi.object().keys({
@@ -143,6 +143,7 @@ export const createProjectSchema: ValidationSchema = {
 
 export const getProjectSchema: ValidationSchema = {
     querySchema: Joi.object().keys({
+        status: Joi.string().valid(...Object.values(ProjectStatus)).optional(),
         sortBy: Joi.string().valid('name', 'createdAt').optional(),
         sortOrder: Joi.string().valid('asc', 'desc').optional(),
 

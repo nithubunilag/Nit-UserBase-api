@@ -7,7 +7,7 @@ import {
 } from '@/api/user/core/interfaces';
 import { EmploymentTimeline, Project, User, UserProject } from '@/api/user/core/models';
 import { BadRequestError, ConflictError, ControllerArgs, HttpStatus, logger, sequelize } from '@/core';
-import { Op } from 'sequelize';
+import { InferAttributes, Op, WhereOptions } from 'sequelize';
 
 export class ProjectService {
     constructor(
@@ -62,15 +62,21 @@ export class ProjectService {
     };
 
     findAll = async ({ query }: ControllerArgs<RetrieveProjectPayload>) => {
-        const { sortBy = 'fullName', sortOrder = 'asc', page = 1, limit = 10 } = query;
+        const { status, sortBy = 'name', sortOrder = 'asc', page = 1, limit = 10 } = query;
 
         const offset = (page - 1) * limit;
 
+        const where: WhereOptions<InferAttributes<Project>> = {
+            ...(status && { status }),
+        };
+
         try {
             const projects = await this.dbProject.findAll({
-                // order: [[sortBy, sortOrder]],
-                // offset,
-                // limit,
+                where,
+                order: [[sortBy, sortOrder]],
+                offset,
+                limit,
+                include: [{ model: User, as: 'users' }],
             });
 
             return {

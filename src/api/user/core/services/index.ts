@@ -1,7 +1,10 @@
+import { OTP } from '@/api/auth';
+import { OTPService } from '@/api/auth/utils';
 import { Department, EmploymentTimeline, Project, Role, User, UserProject } from '../models';
 import { CreateUser } from './create-user';
 import { DeleteUser } from './delete-user';
 import { DepartmentService } from './department-service';
+import { GenerateUserOtp } from './generate-user-otp';
 import { ProjectService } from './project-service';
 import { PromoteUser } from './promote-user';
 import { RetrieveUser } from './retrieve-user';
@@ -16,3 +19,4 @@ export const updateUserHandler = new UpdateUser(User, Role);
 export const departmentService = new DepartmentService(Department);
 export const promoteUserHandler = new PromoteUser(User, EmploymentTimeline, Role, Department);
 export const projectService = new ProjectService(User, Project, UserProject, EmploymentTimeline);
+export const generateUserService = new GenerateUserOtp(User, new OTPService(OTP));

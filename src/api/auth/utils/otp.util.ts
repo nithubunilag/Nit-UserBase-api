@@ -1,10 +1,5 @@
 import { OTP } from '../models';
 
-type SaveOTPInDB = {
-    authId: string;
-    receivingMedium: 'EMAIL' | 'SMS';
-};
-
 export class OTPService {
     constructor(private readonly dbOtp: typeof OTP) {}
 
@@ -44,7 +39,6 @@ export class OTPService {
     }
 
     async storeOTPInDb(authId: string): Promise<number> {
-
         const otp = this.createOtp();
 
         const otpExp = this.createOTPExp();

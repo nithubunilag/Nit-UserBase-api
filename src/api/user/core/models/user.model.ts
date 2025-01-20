@@ -12,6 +12,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare gender: UserGender;
     declare dateOfBirth: CreationOptional<Date>;
     declare phoneNumber: CreationOptional<string>;
+    declare ownIdData: CreationOptional<string>;
     declare emergencyContact: CreationOptional<string>;
     declare currentAddress: CreationOptional<string>;
     declare permanentAddress: CreationOptional<string>;
@@ -19,6 +20,8 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare educationLevel: CreationOptional<EducationalLevel>;
     declare roleId: ForeignKey<Role['id']>;
     declare departmentId: ForeignKey<Department['id']>;
+    declare otp: CreationOptional<number>;
+    declare otpExp: CreationOptional<Date>;
 
     public role?: Role;
     public department?: Department;
@@ -70,6 +73,11 @@ User.init(
         permanentAddress: {
             type: DataTypes.STRING,
         },
+        ownIdData: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: true,
+        },
 
         linkedinProfile: {
             type: DataTypes.STRING,
@@ -77,6 +85,12 @@ User.init(
 
         educationLevel: {
             type: DataTypes.ENUM(...Object.values(EducationalLevel)),
+        },
+        otp: {
+            type: DataTypes.INTEGER({ length: 6 }),
+        },
+        otpExp: {
+            type: DataTypes.DATE,
         },
 
         roleId: {

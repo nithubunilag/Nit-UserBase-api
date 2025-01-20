@@ -88,6 +88,12 @@ export interface PromoteUserPayload extends ControllerArgsTypes {
     };
 }
 
+export interface GenerateUserOTPPayload extends ControllerArgsTypes {
+    params: {
+        id: string;
+    };
+}
+
 // PROJECTS
 
 export interface CreateProjectPayload extends ControllerArgsTypes {

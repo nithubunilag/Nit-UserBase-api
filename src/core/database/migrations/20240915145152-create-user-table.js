@@ -56,6 +56,11 @@ module.exports = {
             permanentAddress: {
                 type: Sequelize.STRING,
             },
+            ownIdData: {
+                type: Sequelize.STRING,
+                unique: true,
+                allowNull: true,
+            },
 
             linkedinProfile: {
                 type: Sequelize.STRING,
@@ -63,6 +68,12 @@ module.exports = {
 
             educationLevel: {
                 type: Sequelize.ENUM('High School', 'B.Sc.', 'Masters', 'Ph.D.', 'Diploma', 'Associate Degree', 'Others'),
+            },
+            otp: {
+                type: Sequelize.INTEGER({ length: 6 }),
+            },
+            otpExp: {
+                type: Sequelize.DATE,
             },
 
             roleId: {
